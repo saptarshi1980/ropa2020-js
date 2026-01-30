@@ -59,7 +59,6 @@ function getDA(date) {
   return da;
 }
 
-
 /* ==================================================
    INCREMENT RULE
    ================================================== */
@@ -155,91 +154,111 @@ export default function SalaryArrearCalculator() {
   };
 
   /* ==================================================
+     BUTTON STYLE
+     ================================================== */
+
+  const buttonStyle = {
+    padding: "10px 25px",
+    fontSize: "15px",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer",
+    background: "#1976d2",
+    color: "#fff",
+    margin: "5px 5px"
+  };
+
+  /* ==================================================
      UI
      ================================================== */
 
   return (
-  <div className="container">
-    {/* <h2>📊 ROPA-2020 Salary Arrear Calculator</h2> */}
+    <div className="container">
+      {/* <h2>📊 ROPA-2020 Salary Arrear Calculator</h2> */}
 
-    <div className="form-grid">
-      <div className="form-group">
-        <label>Initial Grade Pay</label>
-        <select value={initialGP} onChange={e => {
-          const gp = Number(e.target.value);
-          setInitialGP(gp);
-          setInitialBasic(PAY_MATRIX[gp][0][0]);
-        }}>
-          <option value={6600}>GP 6600</option>
-          <option value={7600}>GP 7600</option>
-        </select>
-      </div>
+      <div className="form-grid">
+        <div className="form-group">
+          <label>Initial Grade Pay</label>
+          <select value={initialGP} onChange={e => {
+            const gp = Number(e.target.value);
+            setInitialGP(gp);
+            setInitialBasic(PAY_MATRIX[gp][0][0]);
+          }}>
+            <option value={6600}>GP 6600</option>
+            <option value={7600}>GP 7600</option>
+          </select>
+        </div>
 
-      <div className="form-group">
-        <label>Initial Basic (Jan-2020)</label>
-        <select value={initialBasic} onChange={e => setInitialBasic(Number(e.target.value))}>
-          {PAY_MATRIX[initialGP].map(([b]) => (
-            <option key={b} value={b}>₹ {b}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="form-group">
-        <label>Increment Month</label>
-        <select value={incrementMonth} onChange={e => setIncrementMonth(Number(e.target.value))}>
-          {[...Array(12)].map((_, i) => (
-            <option key={i + 1} value={i + 1}>
-              {dayjs().month(i).format("MMMM")}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="form-group">
-        <label>Arrear upto (YYYYMM)</label>
-        <input value={arrearUpto} onChange={e => setArrearUpto(e.target.value)} />
-      </div>
-
-      <div className="form-group">
-        <label>Promotion Month (optional)</label>
-        <input value={promotionMonth} onChange={e => setPromotionMonth(e.target.value)} />
-      </div>
-    </div>
-
-    <div className="button-row">
-      <button onClick={generateArrear}>Generate Arrear</button>
-      {rows.length > 0 && (
-        <button onClick={downloadExcel}>⬇ Download Excel</button>
-      )}
-    </div>
-
-    {rows.length > 0 && (
-      <div className="result-box">
-        <h3>✅ Total Arrear: ₹ {totalArrear.toLocaleString()}</h3>
-
-        <div className="table-wrapper">
-         <table>
-          <thead>
-            <tr>
-              {Object.keys(rows[0]).map(h => (
-                <th key={h}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={i}>
-                {Object.values(r).map((v, j) => (
-                  <td key={j}>{v}</td>
-                ))}
-              </tr>
+        <div className="form-group">
+          <label>Initial Basic (Jan-2020)</label>
+          <select value={initialBasic} onChange={e => setInitialBasic(Number(e.target.value))}>
+            {PAY_MATRIX[initialGP].map(([b]) => (
+              <option key={b} value={b}>₹ {b}</option>
             ))}
-          </tbody>
-        </table>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Increment Month</label>
+          <select value={incrementMonth} onChange={e => setIncrementMonth(Number(e.target.value))}>
+            {[...Array(12)].map((_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {dayjs().month(i).format("MMMM")}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Arrear upto (YYYYMM)</label>
+          <input value={arrearUpto} onChange={e => setArrearUpto(e.target.value)} />
+        </div>
+
+        <div className="form-group">
+          <label>Promotion Month (optional)</label>
+          <input value={promotionMonth} onChange={e => setPromotionMonth(e.target.value)} />
         </div>
       </div>
-    )}
-  </div>
-);
 
+      {/* ============ BUTTON ROW (CENTERED) ============ */}
+      <div className="button-row" style={{ textAlign: "center", marginTop: "20px", marginBottom: "20px" }}>
+        <button onClick={generateArrear} style={buttonStyle}>
+          Calculate Arrear
+        </button>
+        {rows.length > 0 && (
+          <button onClick={downloadExcel} style={buttonStyle}>
+            ⬇ Download Excel
+          </button>
+        )}
+      </div>
+
+      {/* ============ RESULT TABLE ============ */}
+      {rows.length > 0 && (
+        <div className="result-box">
+          <h3>✅ Total Arrear: ₹ {totalArrear.toLocaleString()}</h3>
+
+          <div className="table-wrapper" style={{ overflowX: "auto" }}>
+            <table style={{ borderCollapse: "collapse", width: "100%" }}>
+              <thead>
+                <tr>
+                  {Object.keys(rows[0]).map(h => (
+                    <th key={h} style={{ border: "1px solid #ccc", padding: "5px" }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r, i) => (
+                  <tr key={i}>
+                    {Object.values(r).map((v, j) => (
+                      <td key={j} style={{ border: "1px solid #ccc", padding: "5px" }}>{v}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

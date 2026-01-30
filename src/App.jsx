@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <h2 style={{ textAlign: "center" }}>
-        📊 ROPA-2020 Salary Arrear Calculator
+        📊 ROPA-2020 Salary Arrear Calculator for Pay Level 9 (GP Rs 6600) and Level 10 (GP Rs 7600)
       </h2>
 
       <SalaryArrearCalculator />

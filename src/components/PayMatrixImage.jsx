@@ -1,6 +1,9 @@
 import React from "react";
 
-/* PAY MATRIX */
+/* ==================================================
+   PAY MATRIX DATA
+   ================================================== */
+
 const PAY_MATRIX = {
   6600: [
     [73700, 76500], [76000, 78800], [78300, 81200], [80700, 83700],
@@ -25,7 +28,9 @@ const PAY_MATRIX = {
   ]
 };
 
-/* ================= PNG GENERATOR ================= */
+/* ==================================================
+   PNG GENERATOR
+   ================================================== */
 
 function downloadPayMatrixPNG(gp) {
   const rows = PAY_MATRIX[gp];
@@ -48,12 +53,12 @@ function downloadPayMatrixPNG(gp) {
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-  /* ================= TITLE ================= */
+  /* Title */
   ctx.fillStyle = "#000000";
   ctx.font = "bold 20px Arial";
   ctx.fillText(`Revised Pay Matrix – GP ${gp}`, 200, 32);
 
-  /* ================= HEADER ================= */
+  /* Header */
   const headerY = titleHeight + 20;
 
   ctx.font = "bold 14px Arial";
@@ -66,42 +71,85 @@ function downloadPayMatrixPNG(gp) {
   ctx.lineTo(680, headerY + 6);
   ctx.stroke();
 
-  /* ================= TABLE BODY ================= */
+  /* Table Body */
   ctx.font = "14px Arial";
-
   let startY = titleHeight + headerHeight;
 
   rows.forEach(([oldB, newB], i) => {
     const y = startY + i * rowHeight;
-
     ctx.fillText(i + 1, 70, y);
     ctx.fillText(`₹ ${oldB.toLocaleString()}`, 230, y);
     ctx.fillText(`₹ ${newB.toLocaleString()}`, 470, y);
   });
 
-  /* ================= DOWNLOAD ================= */
+  /* Download */
   const link = document.createElement("a");
   link.download = `pay_matrix_gp_${gp}.png`;
   link.href = canvas.toDataURL("image/png");
   link.click();
 }
 
-/* ================= COMPONENT ================= */
+/* ==================================================
+   COMPONENT (HORIZONTALLY CENTERED ONLY)
+   ================================================== */
 
 export default function PayMatrixImage() {
   return (
-    <div style={{ marginTop: "30px" }}>
-      <h3>📷 Download Revised Pay Matrix</h3>
+    <div
+      style={{
+        textAlign: "center",
+        paddingTop: "40px", // gives some space from top
+        background: "#f5f7fa",
+        minHeight: "100vh"
+      }}
+    >
+      <div
+        style={{
+          display: "inline-block",
+          textAlign: "center",
+          padding: "30px 40px",
+          background: "#ffffff",
+          borderRadius: "12px",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+          maxWidth: "400px",
+          width: "100%"
+        }}
+      >
+        <h3 style={{ marginBottom: "20px" }}>
+          📷 Download Revised Pay Matrix
+        </h3>
 
-      <button onClick={() => downloadPayMatrixPNG(6600)}>
-        ⬇ GP 6600 PNG
-      </button>
+        <button
+          onClick={() => downloadPayMatrixPNG(6600)}
+          style={buttonStyle}
+        >
+          ⬇ GP 6600 PNG
+        </button>
 
-      &nbsp;&nbsp;
+        <br /><br />
 
-      <button onClick={() => downloadPayMatrixPNG(7600)}>
-        ⬇ GP 7600 PNG
-      </button>
+        <button
+          onClick={() => downloadPayMatrixPNG(7600)}
+          style={buttonStyle}
+        >
+          ⬇ GP 7600 PNG
+        </button>
+      </div>
     </div>
   );
 }
+
+/* ==================================================
+   BUTTON STYLE
+   ================================================== */
+
+const buttonStyle = {
+  padding: "10px 20px",
+  fontSize: "15px",
+  borderRadius: "8px",
+  border: "none",
+  cursor: "pointer",
+  background: "#1976d2",
+  color: "#ffffff",
+  width: "100%"
+};
