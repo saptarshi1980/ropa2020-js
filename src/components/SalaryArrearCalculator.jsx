@@ -217,7 +217,8 @@ export default function SalaryArrearCalculator() {
       <div className="result-box">
         <h3>✅ Total Arrear: ₹ {totalArrear.toLocaleString()}</h3>
 
-        <table>
+        <div className="table-wrapper">
+         <table>
           <thead>
             <tr>
               {Object.keys(rows[0]).map(h => (
@@ -235,6 +236,7 @@ export default function SalaryArrearCalculator() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     )}
   </div>

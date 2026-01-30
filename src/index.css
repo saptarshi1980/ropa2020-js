@@ -85,3 +85,61 @@ tbody tr:hover {
 td:first-child {
   text-align: left;
 }
+
+/* =========================
+   Mobile Responsive Styles
+   ========================= */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Prevent table from shrinking */
+table {
+  min-width: 900px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+
+  .container {
+    padding: 10px;
+  }
+
+  .form-grid {
+    display: block;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  label {
+    font-size: 13px;
+  }
+
+  input, select {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .button-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  th, td {
+    padding: 5px;
+  }
+}
