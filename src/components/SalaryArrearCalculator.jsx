@@ -64,8 +64,12 @@ function getDA(date) {
    ================================================== */
 
 function incrementDue(current, incMonth) {
-  return current.month() + 1 === incMonth && current.year() >= 2020;
+  return (
+    current.month() + 1 === incMonth &&
+    current.year() > 2020   // IMPORTANT: strictly greater
+  );
 }
+
 
 /* ==================================================
    COMPONENT
